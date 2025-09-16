@@ -1,6 +1,6 @@
 module github.com/arhitov/goprinters
 
-go 1.24.6
+go 1.24.4
 
 require (
 	github.com/arhitov/goenum v0.1.0
