@@ -1,4 +1,4 @@
-module goprinters
+module github.com/arhitov/goprinters
 
 go 1.24.6
 

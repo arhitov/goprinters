@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"goprinters/types"
+	"github.com/arhitov/goprinters/types"
 	"os"
 	"os/exec"
 	"strings"

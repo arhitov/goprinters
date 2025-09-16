@@ -1,10 +1,10 @@
-//go:build !windows
+//go:build !linux && !windows && !darwin && !android && !ios
 
 package os
 
 import (
 	"errors"
-	"goprinters/types"
+	"github.com/arhitov/goprinters/types"
 )
 
 func GetOS() types.OS {

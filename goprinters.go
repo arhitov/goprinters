@@ -1,8 +1,8 @@
 package goprinters
 
 import (
-	"goprinters/os"
-	"goprinters/types"
+	"github.com/arhitov/goprinters/os"
+	"github.com/arhitov/goprinters/types"
 )
 
 // GetPrinters получить список принтеров
