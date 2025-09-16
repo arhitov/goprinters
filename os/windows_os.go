@@ -157,7 +157,14 @@ func PrintRaw(printer types.Printer, text string) error {
 }
 
 func callCommand(command string) (string, error) {
-	cmd := exec.Command("powershell", "-Command", command)
+	cmd := exec.Command("cmd", "/c", "powershell", "-Command", command)
+	//cmd := exec.Command("cmd", "/c", "powershell", "-WindowStyle", "Hidden", "-Command", command)
+
+	// Скрываем окно консоли
+	cmd.SysProcAttr = &syscall.SysProcAttr{
+		HideWindow:    true,       // Это скроет консольное окно
+		CreationFlags: 0x08000000, // CREATE_NO_WINDOW
+	}
 
 	// Захватываем вывод
 	var out bytes.Buffer
