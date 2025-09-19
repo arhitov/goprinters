@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/arhitov/goprinters/entities"
 	"github.com/arhitov/goprinters/types"
 	"os"
 	"os/exec"
@@ -30,7 +31,7 @@ type pnpDevice struct {
 }
 
 // GetPrinters получить список принтеров
-func GetPrinters() ([]types.Printer, error) {
+func GetPrinters() ([]entities.Printer, error) {
 	// Создаем PowerShell команду
 	psCommand := `Get-Printer | Where-Object {$_.PortName -like 'USB*'} | Select-Object DriverName, Name, PortName, Datatype | ConvertTo-Json`
 	printerObjs, err := parseOutputCommand[printerObject](psCommand)
@@ -38,9 +39,9 @@ func GetPrinters() ([]types.Printer, error) {
 		return nil, err
 	}
 
-	var printers []types.Printer
+	var printers []entities.Printer
 	for _, printerObj := range printerObjs {
-		printers = append(printers, types.Printer{
+		printers = append(printers, entities.Printer{
 			SystemName:   printerObj.DriverName,
 			FriendlyName: printerObj.Name,
 			Location:     printerObj.PortName,
@@ -51,7 +52,7 @@ func GetPrinters() ([]types.Printer, error) {
 }
 
 // CheckPrinterAvailability проверить что принтер доступен для печати
-func CheckPrinterAvailability(printer types.Printer) error {
+func CheckPrinterAvailability(printer entities.Printer) error {
 	// Создаем PowerShell команду
 	psCommand := fmt.Sprintf(
 		`Get-PnpDevice -Class Printer | Where-Object {$_.Name -eq '%s'} | Select-Object FriendlyName, Status, InstanceId | ConvertTo-Json`,
@@ -75,7 +76,7 @@ func CheckPrinterAvailability(printer types.Printer) error {
 }
 
 // PrintRaw отправляет текст на принтер
-func PrintRaw(printer types.Printer, text string) error {
+func PrintRaw(printer entities.Printer, text string) error {
 	var (
 		winspool         = syscall.NewLazyDLL("winspool.drv")
 		openPrinter      = winspool.NewProc("OpenPrinterW")

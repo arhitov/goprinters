@@ -2,6 +2,7 @@ package goprinters
 
 import (
 	"errors"
+	"github.com/arhitov/goprinters/entities"
 	"github.com/arhitov/goprinters/os"
 	"github.com/arhitov/goprinters/types"
 	"runtime"
@@ -17,15 +18,15 @@ func GetOS() types.OS {
 }
 
 // GetPrinters получить список принтеров
-func GetPrinters() ([]types.Printer, error) {
+func GetPrinters() ([]entities.Printer, error) {
 	if GetOS() == types.OSUnknown {
-		return []types.Printer{}, nil
+		return []entities.Printer{}, nil
 	}
 	return os.GetPrinters()
 }
 
 // CheckPrinterAvailability проверить что принтер доступен для печати
-func CheckPrinterAvailability(printer types.Printer) error {
+func CheckPrinterAvailability(printer entities.Printer) error {
 	if GetOS() == types.OSUnknown {
 		return errors.New("no printer available")
 	}
@@ -33,7 +34,7 @@ func CheckPrinterAvailability(printer types.Printer) error {
 }
 
 // PrintRaw отправляет текст на принтер
-func PrintRaw(printer types.Printer, text string) error {
+func PrintRaw(printer entities.Printer, text string) error {
 	if GetOS() == types.OSUnknown {
 		return errors.New("no printer available")
 	}
