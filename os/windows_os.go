@@ -29,10 +29,6 @@ type pnpDevice struct {
 	InstanceId string `json:"InstanceId"`
 }
 
-func GetOS() types.OS {
-	return types.OSWindows
-}
-
 // GetPrinters получить список принтеров
 func GetPrinters() ([]types.Printer, error) {
 	// Создаем PowerShell команду
