@@ -47,7 +47,7 @@ func GetPrinters() ([]types.Printer, error) {
 		printers = append(printers, types.Printer{
 			SystemName:   printerObj.DriverName,
 			FriendlyName: printerObj.Name,
-			Port:         printerObj.PortName,
+			Location:     printerObj.PortName,
 			Interface:    types.PrinterInterfaceUSB,
 		})
 	}
