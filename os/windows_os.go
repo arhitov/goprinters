@@ -30,9 +30,10 @@ type pnpDevice struct {
 	InstanceId string `json:"InstanceId"`
 }
 
-// GetPrinters получить список принтеров
-func GetPrinters() ([]entities.Printer, error) {
+// GetSystemPrinters получить список принтеров зарегистрированных в системе
+func GetSystemPrinters() ([]entities.Printer, error) {
 	// Создаем PowerShell команду
+	// @TODO 2025.09.20 Пока только usb принтер
 	psCommand := `Get-Printer | Where-Object {$_.PortName -like 'USB*'} | Select-Object DriverName, Name, PortName, Datatype | ConvertTo-Json`
 	printerObjs, err := parseOutputCommand[printerObject](psCommand)
 	if err != nil {
